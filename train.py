@@ -6,6 +6,8 @@ from models.gcn import GCN
 from models.utils import build_optimizer, get_loss, get_accuracy
 from tensorboardX import SummaryWriter
 
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', type=str, default='citeseer', help='Dataset to train')
@@ -50,7 +52,7 @@ def train():
                   %(epoch, loss.detach().numpy(), val_loss, train_accuracy, val_accuracy))
         if epoch % args.checkpoint_interval == 0:
             torch.save(model.state_dict(), os.path.join(saved_checkpoint_dir, "gcn_%d.pth"%epoch))
-        optimizer.zero_grad()  # Important
+        optimizer.zero_grad()
         loss.backward()
         optimizer.step()
     writer.close()

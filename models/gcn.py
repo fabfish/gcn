@@ -50,3 +50,5 @@ class GCN(nn.Module):
         F = torch.mm(A, F)
         output = self.gcn_layer2(F)
         return output
+
+        
